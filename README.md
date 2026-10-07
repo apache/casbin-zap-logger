@@ -3,9 +3,6 @@
 <h3 align="center">Zap logger is the Zap logger for Casbin. With this library, Casbin can log information more powerful.</h3>
 <div class="labels">
   <p  align="center">
-    <a href="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg">
-      <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release">
-    </a>
     <a href="https://goreportcard.com/report/github.com/casbin/zap-logger">
       <img src="https://goreportcard.com/badge/github.com/casbin/zap-logger" alt="Go Report Card">
     </a>
