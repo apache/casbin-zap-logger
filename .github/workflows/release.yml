@@ -56,12 +56,17 @@ jobs:
       - name: Verify go.mod matches the tag
         run: |
           set -euo pipefail
-          # Go only resolves vN.x.y tags for a module whose path ends in /vN (N >= 2).
+          # Go resolves vN.x.y tags (N >= 2) only for a module whose path ends in
+          # /vN, and v0 / v1 tags only for a module without such a suffix.
           MODULE="$(awk '/^module /{print $2; exit}' go.mod)"
           MAJOR="${GITHUB_REF_NAME#v}"
           MAJOR="${MAJOR%%.*}"
-          SUFFIX="${MODULE##*/}"
-          if [ "$MAJOR" -ge 2 ] && [ "$SUFFIX" != "v$MAJOR" ]; then
+          if [[ "${MODULE##*/}" =~ ^v([0-9]+)$ ]]; then
+            OK=$([ "$MAJOR" = "${BASH_REMATCH[1]}" ] && echo true || echo false)
+          else
+            OK=$([ "$MAJOR" -le 1 ] && echo true || echo false)
+          fi
+          if [ "$OK" != true ]; then
             echo "::error::go.mod declares $MODULE but the tag is $GITHUB_REF_NAME."
             exit 1
           fi
